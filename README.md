@@ -105,7 +105,7 @@ curl -X POST "http://localhost:8000/verification/verify" \
   -F "file=@/path/to/document.pdf"
 ```
 
-## 🧩 Environment Variables (`.env`)
+##  Environment Variables (`.env`)
 ```env
 DB_USER=docadmin
 DB_PASSWORD='your_password'
@@ -119,10 +119,8 @@ CONTRACT_ADDRESS=0x... # Fill after deploy
 HYPERLEDGER_CONFIG_PATH=blockchain/hyperledger/network/config
 ```
 
-A valid Fernet key is a base64-encoded 32-byte value, resulting in a 44-character string like:
-```bash
-u6KD1s7YZKkZkzvRM7oJ4BlEwTqgI7LTyRMUOJ_gG9w=
-```
+A valid Fernet key is a base64-encoded 32-byte value, resulting in a 44-character string
+
 ---
 
 Need help? Just ask! 🚀
