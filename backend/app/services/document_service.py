@@ -4,6 +4,7 @@ import uuid
 from sqlalchemy.orm import Session
 from ..models.document import Document
 from ..models.schemas import DocumentMetadata
+from ..models.schemas import VerificationResult
 from ..services.encryption_service import encrypt_file, decrypt_file
 from ..blockchain.ethereum import add_document_to_blockchain
 from ..blockchain.hyperledger import add_document_to_hyperledger

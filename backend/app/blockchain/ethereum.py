@@ -11,7 +11,7 @@ CONTRACT_ADDRESS = os.getenv("CONTRACT_ADDRESS")
 
 # Load contract ABI
 try:
-    with open("app/blockchain/contracts/DocumentVerification.json") as f:
+    with open("/home/chamoda/legal-document-verification/blockchain/ethereum/contract_address.json") as f:
         contract_json = json.load(f)
         CONTRACT_ABI = contract_json["abi"]
 except:
