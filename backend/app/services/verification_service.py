@@ -13,6 +13,12 @@ def verify_document(db: Session, file_content):
     # Check if document exists in database
     db_document = db.query(Document).filter(Document.hash == doc_hash).first()
     
+    #get id from database if exists
+    if db_document:
+        doc_id = db_document.id
+    else:
+        doc_id = None
+    
     # Verify on Ethereum blockchain
     eth_result = verify_document_on_blockchain(doc_hash)
     

@@ -7,7 +7,7 @@ import json
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
-@router.post("/upload", response_model=VerificationResult)
+@router.post("/upload")
 async def upload_document(
     metadata: str = Form(...),
     file: UploadFile = File(...),
@@ -42,7 +42,6 @@ def get_document_metadata(doc_id: str, db: Session = Depends(get_db)):
         "hash": document.hash,
         "metadata": json.loads(metadata),
         "timestamp": document.timestamp,
-        "verified": document.verified
     }
 
 @router.get("/download/{doc_id}")

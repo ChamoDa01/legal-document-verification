@@ -52,16 +52,16 @@ def store_document(db: Session, file_content, filename, metadata: DocumentMetada
     db.commit()
     db.refresh(db_document)
     
-    return VerificationResult(
-        verified=db_document.verified,
-        hash=doc_hash,
-        metadata=metadata.dict(),
-        timestamp=int(db_document.timestamp.timestamp()) if db_document.timestamp else None, 
-        blockchain_info={
+    return {
+        "id": doc_id,
+        "hash": doc_hash,
+        "filename": filename,
+        "timestamp": int(db_document.timestamp.timestamp()) if db_document.timestamp else None,
+        "blockchain_info": {
             "ethereum": eth_result,
             "hyperledger": hl_result
         }
-    )
+    }
 
 def get_document_by_hash(db: Session, doc_hash: str):
     """Get document by hash"""
