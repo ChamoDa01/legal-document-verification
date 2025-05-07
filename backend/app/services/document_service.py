@@ -7,7 +7,6 @@ from ..models.schemas import DocumentMetadata
 from ..models.schemas import VerificationResult
 from ..services.encryption_service import encrypt_file, decrypt_file
 from ..blockchain.ethereum import add_document_to_blockchain
-from ..blockchain.hyperledger import add_document_to_hyperledger
 
 def calculate_hash(content):
     """Calculate SHA-256 hash of file content"""
@@ -32,9 +31,6 @@ def store_document(db: Session, file_content, filename, metadata: DocumentMetada
     # Register on Ethereum blockchain
     eth_result = add_document_to_blockchain(doc_hash, metadata.dict())
     
-    # Register on Hyperledger Fabric
-    hl_result = add_document_to_hyperledger(doc_hash, metadata.dict())
-    
     # Create database record
     db_document = Document(
         id=doc_id,
@@ -44,7 +40,6 @@ def store_document(db: Session, file_content, filename, metadata: DocumentMetada
         doc_metadata=metadata_json,
         verified=True,
         ethereum_tx=eth_result.get("tx_hash"),
-        hyperledger_tx=hl_result.get("tx_id")
     )
     
     # Add and commit to database
@@ -59,7 +54,6 @@ def store_document(db: Session, file_content, filename, metadata: DocumentMetada
         "timestamp": int(db_document.timestamp.timestamp()) if db_document.timestamp else None,
         "blockchain_info": {
             "ethereum": eth_result,
-            "hyperledger": hl_result
         }
     }
 

@@ -2,7 +2,6 @@ import json
 from sqlalchemy.orm import Session
 from ..models.document import Document
 from ..blockchain.ethereum import verify_document_on_blockchain
-from ..blockchain.hyperledger import verify_document_on_hyperledger
 from .document_service import calculate_hash
 
 def verify_document(db: Session, file_content):
@@ -22,11 +21,9 @@ def verify_document(db: Session, file_content):
     # Verify on Ethereum blockchain
     eth_result = verify_document_on_blockchain(doc_hash)
     
-    # Verify on Hyperledger Fabric
-    hl_result = verify_document_on_hyperledger(doc_hash)
     
-    # Document is verified if it exists on both blockchains
-    verified = eth_result.get("verified", False) and hl_result.get("verified", False)
+    # Document is verified on Ethereum blockchain
+    verified = eth_result.get("verified", False)
     
     # Get metadata from database if available
     metadata = None
@@ -46,7 +43,6 @@ def verify_document(db: Session, file_content):
         "timestamp": timestamp,
         "blockchain_info": {
             "ethereum": eth_result,
-            "hyperledger": hl_result
         },
         "in_database": db_document is not None
     }
